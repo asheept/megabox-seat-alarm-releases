@@ -1,0 +1,42 @@
+name: Verify and publish signed release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+concurrency:
+  group: public-release-queue
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify artifact allowlist and metadata
+        run: node scripts/verify-release.cjs assets "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" --public-tree
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo 'Release already exists; refusing to replace published assets.' >&2
+            exit 1
+          fi
+          if latest="$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name 2>/dev/null)"; then
+            if [[ ! "$latest" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then echo 'Current Latest tag is not stable semver.' >&2; exit 1; fi
+          else
+            count="$(gh api "repos/$GITHUB_REPOSITORY/releases" --jq length)"
+            if [[ "$count" != '0' ]]; then echo 'Cannot determine current Latest release.' >&2; exit 1; fi
+            latest=''
+          fi
+          latest_option='--latest'
+          if [[ -n "$latest" ]]; then
+            if ! node -e 'const a=process.argv[1].slice(1).split(".").map(Number),b=process.argv[2].slice(1).split(".").map(Number),i=a.findIndex((x,j)=>x!==b[j]);process.exit(i>=0&&a[i]>b[i]?0:1)' "$GITHUB_REF_NAME" "$latest"; then
+              latest_option='--latest=false'
+            fi
+          fi
+          gh release create "$GITHUB_REF_NAME" assets/* --verify-tag "$latest_option" --notes-file assets/release-notes.md
