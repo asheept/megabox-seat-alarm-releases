@@ -1,2 +1,18 @@
-# megabox-seat-alarm-releases
-Megabox Seat Alarm signed Windows installers and update feed. Application source is private.
+# 메가박스 좌석 알리미 업데이트 안내
+
+이 저장소는 Windows용 설치 파일과 업데이트 배포 자료를 제공합니다. 앱 소스 코드는 비공개입니다.
+
+## 설치 및 업데이트
+
+- [최신 메가박스 좌석 알리미 릴리스](https://github.com/asheept/megabox-seat-alarm-releases/releases/latest)에서 Windows x64용 `setup.exe`를 내려받아 한 번 설치하세요.
+- 기존 포터블 버전에는 자동 업데이트 기능이 없습니다. 설치형 `0.2.0`부터 앱을 실행한 뒤 15초 후, 이후 6시간마다 업데이트를 확인합니다.
+- 앱 설정의 설치 버튼으로 업데이트할 수 있습니다. 감시 중이거나 예매·결제가 끝나지 않았다면 설치를 미루고, 작업을 마친 뒤 진행하세요.
+- 설치 프로그램은 기존 설정과 로그인 프로필 경로를 유지합니다. 단, 메가박스 서버 로그인 세션이 만료되면 앱에서 다시 로그인해야 합니다.
+- 앱은 최종 결제를 자동으로 진행하지 않습니다.
+
+## 보안 및 파일 안내
+
+- 릴리스에는 설치 파일, Tauri 업데이트 서명, 업데이트 피드, 해시 및 배포 인프라 자료가 포함될 수 있습니다. 버전별 릴리스는 보존됩니다.
+- 앱이 업데이트를 확인하고 설치하므로 `latest.json`을 직접 열거나 내려받을 필요가 없습니다.
+- Tauri 업데이트 서명 검증은 Windows Authenticode 코드 서명과 별개입니다. 이 앱은 Windows 정식 Authenticode 서명을 보증하지 않습니다.
+- Windows 보안 경고가 표시되면 내용을 확인하고 신뢰 여부를 판단하세요. 경고를 우회하는 방법은 안내하지 않습니다.
