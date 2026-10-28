@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "repository": "asheept/megabox-seat-alarm-releases",
+  "tag": "v0.2.1",
+  "version": "0.2.1",
+  "installer": "megabox-seat-alarm-0.2.1-setup.exe",
+  "updater": "megabox-seat-alarm-0.2.1-setup.exe",
+  "signature": "megabox-seat-alarm-0.2.1-setup.exe.sig",
+  "files": {
+    "megabox-seat-alarm-0.2.1-setup.exe": "570cdbae8272ea63c165902c4a2dde6947dcdd0448f2d9f981b0a7360f572378",
+    "megabox-seat-alarm-0.2.1-setup.exe.sig": "ab0288daa6514d2fdeba5075cb53f29d55857ee883b5f9d57763a30439cc3a51",
+    "latest.json": "e4edc28ccbd916abfdc23aef9bf8982ae817e3c2384ed50e413491c6a1e6505e",
+    "release-notes.md": "9c1df36ebeb40488b8d5da4ff264406c5f423e30a9ca5581baeac30e6fa30f56"
+  }
+}
